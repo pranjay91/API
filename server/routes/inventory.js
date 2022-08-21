@@ -5,7 +5,7 @@ const inventoryModel = require("../models/inventory")
 router.post("/items" , (req,res)=>{
     inventoryModel.find({inventoryId:req.body.inventoryId}).then((data)=>{
         if(data.length){
-            const Quantity = (data[0].quantity) + (req.body.quantity)
+            const Quantity = data[0].quantity + req.body.quantity
             inventoryModel.updateOne({inventoryId:req.body.inventoryId},{$set:{quantity:Quantity}}).then(()=>{
                 res.status(200).send("Updated Successfully")
             }).catch((err)=>{
@@ -19,6 +19,12 @@ router.post("/items" , (req,res)=>{
                     res.status(400).send(err)
                 })
         }
+    })
+})
+
+router.get("/items" , (req,res)=>{
+    inventoryModel.find().then((data)=>{
+        res.status(200).send(data)
     })
 })
 

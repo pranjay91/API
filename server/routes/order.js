@@ -24,4 +24,10 @@ router.post("/order" , (req , res)=>{
     })
 })
 
+router.get("/order" , (req,res)=>{
+    orderModel.find().then((data)=>{
+        res.status(200).send(data)
+    })
+})
+
 module.exports = router
